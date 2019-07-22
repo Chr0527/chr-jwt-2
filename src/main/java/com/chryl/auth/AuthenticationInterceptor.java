@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 /**
  * Created By Chr on 2019/7/19.
@@ -59,6 +60,23 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 try {
                     //userId 存储在 Claim("id")
                     userId = JWT.decode(token).getClaim("id").asString();
+
+                    //#######################
+                    Date expiresAt = JWT.decode(token).getExpiresAt();
+                    long time = expiresAt.getTime();
+                    System.out.println(time);
+                    Date date = new Date(time);
+                    System.out.println(date);
+                    boolean before = JWT.decode(token).getExpiresAt().before(
+                            new Date(1563783171000L - 5000000));
+                    System.out.println(before);
+
+                    Date expiresAt1 = JWT.decode(token).getExpiresAt();
+                    long time1 = expiresAt1.getTime();
+                    Date date1 = new Date(time1);
+                    System.out.println(date1);
+                    //#######################
+
                 } catch (JWTDecodeException j) {
                     throw new RuntimeException("访问异常！");
                 }

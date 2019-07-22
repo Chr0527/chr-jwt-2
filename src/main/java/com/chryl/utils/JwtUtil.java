@@ -85,6 +85,7 @@ public class JwtUtil {
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis;
             Date exp = new Date(expMillis);
+
             //设置过期时间
             builder.setExpiration(exp);
         }
